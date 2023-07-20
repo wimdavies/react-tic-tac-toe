@@ -17,32 +17,43 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
-    let description;
-
-    if (move === currentMove) {
-      description = 'You are at move #' + move;
-    } else if (move === 0) {
-      description = 'Go to game start';
-    } else {
-      description = 'Go to move #' + move;
+  const GameInfo = () => {
+    const moves = history.map((squares, move) => {    
+      let description;
+  
+      if (move === currentMove) {
+        description = 'You are at move #' + move;
+      } else if (move === 0) {
+        description = 'Go to game start';
+      } else {
+        description = 'Go to move #' + move;
+      }
+  
+      return (
+        <li key={move}>
+          <button onClick={() => jumpTo(move)}>{description}</button>
+        </li>
+      );
+    });
+    
+    const handleSortClick = () => {
+      
     }
 
     return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
+      <div className="game-info">
+        <button onClick={handleSortClick}>Reverse order of moves</button>
+        <ol>{moves}</ol>
+      </div>
+    )
+  }
 
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
+      <GameInfo />
     </div>
   );
 }
