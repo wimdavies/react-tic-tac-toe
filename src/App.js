@@ -4,6 +4,7 @@ import Board from "./components/Board";
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [isDescending, setIsDescending] = useState(false);
   const currentSquares = history[currentMove];
   const xIsNext = currentMove % 2 === 0;
 
@@ -37,13 +38,14 @@ export default function Game() {
     });
     
     const handleSortClick = () => {
-      
+      const reversedOrder = !isDescending;
+      setIsDescending(reversedOrder);
     }
 
     return (
       <div className="game-info">
-        <button onClick={handleSortClick}>Reverse order of moves</button>
-        <ol>{moves}</ol>
+        <button onClick={handleSortClick}>Sort moves in {isDescending ? 'ascending' : 'descending'} order</button>
+        <ol start={isDescending ? (moves.length - 1) : 0} reversed={isDescending} >{!isDescending ? moves : moves.reverse()}</ol>
       </div>
     )
   }
