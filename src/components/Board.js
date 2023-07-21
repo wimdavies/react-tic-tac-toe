@@ -12,13 +12,16 @@ export default function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[index] = "O";
     }
+    
     onPlay(nextSquares);
   }
 
   const winner = calculateWinner(squares);
   let status;
-  if (winner) {
-    status = "Winner: " + winner;
+  if (!winner && !squares.includes(null)) {
+    status = "Result: draw";
+  } else if (winner) {
+    status = `Result: ${winner} wins`;
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
